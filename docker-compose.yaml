@@ -1,0 +1,43 @@
+services:
+  web:
+    image: nginx:alpine
+    container_name: web
+    volumes:
+      - ./static:/usr/share/nginx/html
+    ports:
+      - "8082:80"
+    networks:
+      - app-network
+
+  envoy:
+    image: envoyproxy/envoy:v1.21-latest
+    container_name: envoy
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml
+    networks:
+      - app-network
+    depends_on:
+      - web
+      - app
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/credentialmgmt_db
+      SPRING_DATASOURCE_USERNAME: testUser
+      SPRING_DATASOURCE_PASSWORD: j8$9!eS!8zL3#uS
+      SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID: 239680975989-44f8n36i58hme0ffs5qg7cpa1ti3dto4.apps.googleusercontent.com
+      SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET: 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
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
