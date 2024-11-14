@@ -19,7 +19,6 @@ import com.wolterskluwer.credentials.service.HomeService;
  */
 
 @Controller
-@RequestMapping("/api")
 public class HomeController {
 
 	@Autowired

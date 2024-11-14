@@ -42,7 +42,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 		CustomUserDetail userDetails = CommonUtils.toCustomUserDetails(user);
 		sessionUtil.setUserDetails(userDetails);
 		logger.info("Authentication successful for user: {}", user.getFirstName());
-		setDefaultTargetUrl("/api/home");
+		setDefaultTargetUrl("/home");
 
 		super.onAuthenticationSuccess(request, response, authentication);
 	}

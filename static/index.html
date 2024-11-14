@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+</head>
+<body>
+    <h1>Welcome to the Spring Boot OAuth2 App! Jessss</h1>
+    <a href="/oauth2/authorization/google">Login with OIDC</a>
+
+	<button onclick="createUser()">Create User</button>
+
+    <button onclick="createCredential()">Create Credengoogletial</button>
+    <button onclick="updateSecret()">Update Secret</button>
+    <button onclick="deleteCredential()">Delete Credential</button>
+
+    <script>
+        async function createCredential() {
+            const requestBody = {
+            };
+            try {
+                const response = await fetch('/api/credential/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+                const result = await response.json();
+                console.log('Create response:', result);
+            } catch (error) {
+                console.error('Error creating credential:', error);
+            }
+        }
+
+        async function updateSecret() {
+            const id = 1;  // Replace with actual credential ID
+            try {
+                const response = await fetch(`/api/credential/updateSecret/${id}`, {
+                    method: 'POST'
+                });
+                const result = await response.json();
+                console.log('Update Secret response:', result);
+            } catch (error) {
+                console.error('Error updating secret:', error);
+            }
+        }
+
+        async function deleteCredential() {
+            const id = 1;  // Replace with actual credential ID
+            try {
+                const response = await fetch(`/api/credential/delete/${id}`, {
+                    method: 'POST'
+                });
+                if (response.status === 204) {
+                    console.log('Credential deleted successfully');
+                } else {
+                    console.log('Delete response:', await response.text());
+                }
+            } catch (error) {
+                console.error('Error deleting credential:', error);
+            }
+        }
+        
+        
+        async function createUser(userData) {
+            try {
+                const response = await fetch('/api/user/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('access_token') // If JWT is required
+                    },
+                    body: JSON.stringify(userData)
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('User created successfully:', data);
+                    alert('User created successfully!');
+                } else {
+                    console.error('Failed to create user:', response.status, response.statusText);
+                    alert('Error: ' + response.statusText);
+                }
+            } catch (error) {
+                console.error('Error creating user:', error);
+                alert('Error creating user');
+            }
+        }
+
+    </script>
+</body>
+</html>

@@ -21,7 +21,8 @@ public class HomeService {
 	public void displayHomePageMessage(Model model, CustomUserDetail userDetails) {
 		try {
 			if (userDetails != null && !userDetails.getSubjectId().isEmpty()) {
-				model.addAttribute("name", userDetails.getFirstName());
+				//model.addAttribute("name", userDetails.getFirstName());
+				model.addAttribute("user", userDetails);
 				model.addAttribute("message", "Login is successful !!!!! ");
 			} else {
 				model.addAttribute("message", "Something went wrong. Please try again later");

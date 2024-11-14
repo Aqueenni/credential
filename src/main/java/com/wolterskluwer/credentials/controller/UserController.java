@@ -7,12 +7,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.wolterskluwer.credentials.dto.CreateUserRequest;
+import com.wolterskluwer.credentials.dto.CustomUserDetail;
+import com.wolterskluwer.credentials.entity.User;
 import com.wolterskluwer.credentials.service.UserService;
 
 /**
@@ -35,5 +39,10 @@ public class UserController {
 		logger.info("Response: {} ", response);
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "application/json").body(response);
 	}
-
+		
+	@GetMapping("/currentUser")
+    public ResponseEntity<CustomUserDetail> getCurrentUser( @SessionAttribute("userDetails") CustomUserDetail userDetails) {       
+        return ResponseEntity.ok(userDetails); 
+    }
+	
 }
