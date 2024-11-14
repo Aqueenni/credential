@@ -23,8 +23,8 @@ public class SecurityConfig {
 		logger.info("Configuring security filter chain");
 
 		http.csrf(csrf -> csrf.disable())
-				.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/login", "/api/home")
-						.permitAll().requestMatchers("/api/**").authenticated().anyRequest().authenticated())
+		.authorizeHttpRequests(
+				authorizeRequests -> authorizeRequests.requestMatchers("/login","/home", "/api/**", "/oauth2").permitAll())
 				.oauth2Login(oauth2 -> oauth2.successHandler(successHandler));
 		return http.build();
 	}

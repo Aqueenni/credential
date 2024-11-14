@@ -1,11 +1,3 @@
-CREATE DATABASE IF NOT EXIST credentialmgmt_db;
-
-CREATE USER 'testUser'@'localhost';
-GRANT ALL PRIVILEGES ON credentialmgmt_db.* TO 'testUser'@'%';
-SET PASSWORD FOR 'testUser'@'localhost' = 'j8$9!eS!8zL3#uS';
-FLUSH PRIVILEGES;
-commit;
-
 INSERT INTO credentialmgmt_db.organization (name,sapid,vat_number) VALUES
 ('TechCorp Solutions', 'SAP001', 'VAT123456789'),
 ('Global Industries Ltd.', 'SAP002', 'VAT987654321'),
@@ -22,3 +14,4 @@ INSERT INTO credentialmgmt_db.organization (name,sapid,vat_number) VALUES
 ('Quantum Dynamics', 'SAP013', 'VAT147258369'),
 ('Visionary Tech Solutions', 'SAP014', 'VAT963258741'),
 ('Pioneers of Tomorrow', 'SAP015', 'VAT741963852');
+commit;
